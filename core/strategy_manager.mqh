@@ -8,12 +8,12 @@
 #include "config.mqh"
 #include "strategy_interface.mqh"
 
-// Forward declarations of strategy classes (will be defined in strategy files)
-class VolumeHMStrategy;
-class MultiTimeframeStrategy;
-class TurtleSoupStrategy;
-class VWAPStrategy;
-class SmartEntryStrategy;
+// Include all strategy implementations
+#include "../strategies/volume_hm_strategy.mqh"
+#include "../strategies/multi_timeframe_strategy.mqh"
+#include "../strategies/turtle_soup_strategy.mqh"
+#include "../strategies/vwap_strategy.mqh"
+#include "../strategies/smart_entry_strategy.mqh"
 
 // Global pointer to active strategy
 IStrategy* activeStrategy = NULL;
