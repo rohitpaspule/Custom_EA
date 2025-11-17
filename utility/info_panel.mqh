@@ -96,9 +96,9 @@ void UpdatePanel() {
    // Lot mode
    string lotMode = EnumToString(LotCalculationMode);
    StringReplace(lotMode, "LOT_MODE_", "");
-   if(LotCalculationMode == FIXED_LOT) {
+   if(LotCalculationMode == LOT_FIXED) {
       lotMode += StringFormat(" (%.2f)", FixedLotSize);
-   } else if(LotCalculationMode == RISK_PERCENT) {
+   } else if(LotCalculationMode == LOT_RISK_PERCENT) {
       lotMode += StringFormat(" (%.1f%%)", RiskPercent);
    }
    ObjectSetString(0, PANEL_NAME + "_LotMode", OBJPROP_TEXT, "Lot: " + lotMode);
