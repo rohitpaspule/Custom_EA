@@ -3,6 +3,7 @@
 #include "../indicators/moving_average.mqh"
 #include "../indicators/vwap.mqh"
 #include "../timeframe_settings/timeframe_settings.mqh"
+#include "../utility/utility.mqh"
 
 TRADE_DIRECTION Anchored_VWAP() {
        
