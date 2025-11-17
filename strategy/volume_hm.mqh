@@ -4,6 +4,7 @@
 #include "../indicators/vwap.mqh"
 #include "../indicators/volume_insights.mqh"
 #include "../timeframe_settings/timeframe_settings.mqh"
+#include "../utility/utility.mqh"
 
 TRADE_DIRECTION Volume_HM () {
 
