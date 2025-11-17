@@ -37,8 +37,8 @@ void CheckCapitalProtection() {
       ulong ticket = PositionGetInteger(POSITION_TICKET);
       double profit = PositionGetDouble(POSITION_PROFIT);
       double swap = PositionGetDouble(POSITION_SWAP);
-      double commission = PositionGetDouble(POSITION_COMMISSION);
-      double totalPL = profit + swap + commission;
+      // Note: Commission is now retrieved from deal history, not position properties
+      double totalPL = profit + swap;  // Commission removed (deprecated in MT5)
 
       bool shouldClose = false;
       string closeReason = "";

@@ -41,7 +41,7 @@ void CheckTrailingStop() {
             trailDistance = Trail_FixedPips * _Point * pipFactor;
             break;
 
-         case TRAIL_ATR:
+         case TRAIL_ATR: {
             double atr = GetATRValue(Trail_ATR_Period);
             if(atr > 0) {
                trailDistance = atr * Trail_ATR_Multi;
@@ -49,8 +49,9 @@ void CheckTrailingStop() {
                trailDistance = Trail_FixedPips * _Point * pipFactor;  // Fallback
             }
             break;
+         }
 
-         case TRAIL_STEP_BASED:
+         case TRAIL_STEP_BASED: {
             // Calculate how many steps of profit we've made
             double profitPips = 0;
             if(posType == POSITION_TYPE_BUY) {
@@ -64,6 +65,7 @@ void CheckTrailingStop() {
                trailDistance = (profitPips - (steps * Trail_StepSize)) * _Point * pipFactor;
             }
             break;
+         }
       }
 
       if(trailDistance <= 0) continue;

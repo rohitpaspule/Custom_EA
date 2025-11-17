@@ -17,11 +17,11 @@ double CalculateStopLoss(TRADE_DIRECTION direction, double entryPrice) {
    double sl = 0;
 
    switch(StopLossMode) {
-      case FIXED_PIPS:
+      case SL_FIXED_PIPS:
          slDistance_Pips = FixedSL_Pips;
          break;
 
-      case ATR_MULTIPLE:
+      case SL_ATR_MULTIPLE: {
          double atr = GetATRValue(ATR_Period_SL);
          if(atr > 0) {
             slDistance_Pips = (atr / (_Point * GetPipFactor(_Symbol))) * ATR_Multiplier_SL;
@@ -29,12 +29,13 @@ double CalculateStopLoss(TRADE_DIRECTION direction, double entryPrice) {
             slDistance_Pips = FixedSL_Pips;  // Fallback
          }
          break;
+      }
 
-      case PERCENT_PRICE:
+      case SL_PERCENT_PRICE:
          slDistance_Pips = (entryPrice * (Percent_SL / 100.0)) / (_Point * GetPipFactor(_Symbol));
          break;
 
-      case BB_WIDTH:
+      case SL_BB_WIDTH: {
          // Calculate Bollinger Band width as SL
          double bbWidth = GetBBWidth();
          if(bbWidth > 0) {
@@ -43,13 +44,14 @@ double CalculateStopLoss(TRADE_DIRECTION direction, double entryPrice) {
             slDistance_Pips = FixedSL_Pips;  // Fallback
          }
          break;
+      }
 
-      case STRATEGY_DEFINED:
+      case SL_STRATEGY_DEFINED:
          // Will be set by strategy
          slDistance_Pips = FixedSL_Pips;  // Fallback
          break;
 
-      case NONE_SL:
+      case SL_NONE:
          return 0;  // No stop loss
    }
 
@@ -75,11 +77,11 @@ double GetStopLossDistance_Pips() {
    double slDistance_Pips = 0;
 
    switch(StopLossMode) {
-      case FIXED_PIPS:
+      case SL_FIXED_PIPS:
          slDistance_Pips = FixedSL_Pips;
          break;
 
-      case ATR_MULTIPLE:
+      case SL_ATR_MULTIPLE: {
          double atr = GetATRValue(ATR_Period_SL);
          if(atr > 0) {
             slDistance_Pips = (atr / (_Point * GetPipFactor(_Symbol))) * ATR_Multiplier_SL;
@@ -87,13 +89,15 @@ double GetStopLossDistance_Pips() {
             slDistance_Pips = FixedSL_Pips;
          }
          break;
+      }
 
-      case PERCENT_PRICE:
+      case SL_PERCENT_PRICE: {
          double price = SymbolInfoDouble(_Symbol, SYMBOL_ASK);
          slDistance_Pips = (price * (Percent_SL / 100.0)) / (_Point * GetPipFactor(_Symbol));
          break;
+      }
 
-      case BB_WIDTH:
+      case SL_BB_WIDTH: {
          double bbWidth = GetBBWidth();
          if(bbWidth > 0) {
             slDistance_Pips = bbWidth / (_Point * GetPipFactor(_Symbol));
@@ -101,12 +105,13 @@ double GetStopLossDistance_Pips() {
             slDistance_Pips = FixedSL_Pips;
          }
          break;
+      }
 
-      case STRATEGY_DEFINED:
+      case SL_STRATEGY_DEFINED:
          slDistance_Pips = FixedSL_Pips;  // Fallback
          break;
 
-      case NONE_SL:
+      case SL_NONE:
          slDistance_Pips = FixedSL_Pips;  // Use default for risk calc
          break;
    }

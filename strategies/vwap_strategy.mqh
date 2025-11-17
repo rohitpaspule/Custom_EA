@@ -19,7 +19,7 @@ public:
 
    virtual StrategySignal GetSignal() override {
       StrategySignal signal;
-      TRADE_DIRECTION direction = vwap_testing();
+      TRADE_DIRECTION direction = Anchored_VWAP();
 
       if(direction == BUY) {
          signal.direction = BUY;

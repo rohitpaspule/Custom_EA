@@ -49,7 +49,7 @@ void CheckBreakEven() {
             }
             break;
 
-         case BE_CUSTOM_PROFIT:
+         case BE_CUSTOM_PROFIT: {
             // Calculate price distance for custom $ profit
             double tickValue = SymbolInfoDouble(_Symbol, SYMBOL_TRADE_TICK_VALUE);
             double lotSize = PositionGetDouble(POSITION_VOLUME);
@@ -57,13 +57,15 @@ void CheckBreakEven() {
                targetProfit = (BE_CustomProfit / (tickValue * lotSize)) * _Point;
             }
             break;
+         }
 
-         case BE_ATR_DISTANCE:
+         case BE_ATR_DISTANCE: {
             double atr = GetATRValue(ATR_Period_SL);
             if(atr > 0) {
                targetProfit = atr * BE_ATR_Multi;
             }
             break;
+         }
       }
 
       // Check if price has moved enough to trigger BE

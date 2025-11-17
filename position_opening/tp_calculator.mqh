@@ -21,13 +21,14 @@ double CalculateTakeProfit(TRADE_DIRECTION direction, double entryPrice, double 
          tpDistance_Pips = FixedTP_Pips;
          break;
 
-      case TP_RISK_REWARD:
+      case TP_RISK_REWARD: {
          // Calculate based on SL distance
          double slDistance_Pips = GetStopLossDistance_Pips();
          tpDistance_Pips = slDistance_Pips * RiskRewardRatio;
          break;
+      }
 
-      case TP_ATR_MULTIPLE:
+      case TP_ATR_MULTIPLE: {
          double atr = GetATRValue(ATR_Period_TP);
          if(atr > 0) {
             tpDistance_Pips = (atr / (_Point * GetPipFactor(_Symbol))) * ATR_Multiplier_TP;
@@ -35,12 +36,14 @@ double CalculateTakeProfit(TRADE_DIRECTION direction, double entryPrice, double 
             tpDistance_Pips = FixedTP_Pips;  // Fallback
          }
          break;
+      }
 
-      case TP_MIRROR_SL:
+      case TP_MIRROR_SL: {
          // Same distance as SL
          double slDistance = MathAbs(entryPrice - slPrice);
          tpDistance_Pips = slDistance / (_Point * GetPipFactor(_Symbol));
          break;
+      }
 
       case TP_STRATEGY_DEFINED:
          // Will be set by strategy

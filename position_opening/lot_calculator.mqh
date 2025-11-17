@@ -14,11 +14,11 @@ double CalculateLotSize(TRADE_DIRECTION direction, double slDistance_Pips = 0) {
    double lotSize = 0.01;  // Minimum lot
 
    switch(LotCalculationMode) {
-      case FIXED_LOT:
+      case LOT_FIXED:
          lotSize = FixedLotSize;
          break;
 
-      case RISK_PERCENT:
+      case LOT_RISK_PERCENT: {
          // Risk % of balance based on SL distance
          if(slDistance_Pips > 0) {
             double balance = AccountInfoDouble(ACCOUNT_BALANCE);
@@ -31,8 +31,9 @@ double CalculateLotSize(TRADE_DIRECTION direction, double slDistance_Pips = 0) {
             lotSize = FixedLotSize;  // Fallback if no SL
          }
          break;
+      }
 
-      case BALANCE_PERCENT:
+      case LOT_BALANCE_PERCENT: {
          // % of balance as position size
          double balance = AccountInfoDouble(ACCOUNT_BALANCE);
          double positionValue = balance * (BalancePercent / 100.0);
@@ -43,8 +44,9 @@ double CalculateLotSize(TRADE_DIRECTION direction, double slDistance_Pips = 0) {
 
          lotSize = positionValue / (contractSize * price);
          break;
+      }
 
-      case ATR_BASED:
+      case LOT_ATR_BASED: {
          // Inverse volatility sizing (lower ATR = larger position)
          double atrValue = GetATRValue(ATR_Period_Lots);
          if(atrValue > 0) {
@@ -58,8 +60,9 @@ double CalculateLotSize(TRADE_DIRECTION direction, double slDistance_Pips = 0) {
             lotSize = FixedLotSize;
          }
          break;
+      }
 
-      case STRATEGY_DEFINED:
+      case LOT_STRATEGY_DEFINED:
          // Will be set by strategy (caller should check signal.hasCustomLotSize)
          lotSize = FixedLotSize;  // Fallback
          break;
@@ -96,19 +99,19 @@ double NormalizeLotSize(double lotSize) {
 //| Get ATR value                                                     |
 //+------------------------------------------------------------------+
 double GetATRValue(int period) {
-   int atrHandle = iATR(_Symbol, _Period, period);
-   if(atrHandle == INVALID_HANDLE) return 0;
+   int localATRHandle = iATR(_Symbol, _Period, period);
+   if(localATRHandle == INVALID_HANDLE) return 0;
 
-   double atrBuffer[];
-   ArraySetAsSeries(atrBuffer, true);
+   double localATRBuffer[];
+   ArraySetAsSeries(localATRBuffer, true);
 
-   if(CopyBuffer(atrHandle, 0, 0, 1, atrBuffer) <= 0) {
-      IndicatorRelease(atrHandle);
+   if(CopyBuffer(localATRHandle, 0, 0, 1, localATRBuffer) <= 0) {
+      IndicatorRelease(localATRHandle);
       return 0;
    }
 
-   double atr = atrBuffer[0];
-   IndicatorRelease(atrHandle);
+   double atr = localATRBuffer[0];
+   IndicatorRelease(localATRHandle);
 
    return atr;
 }
