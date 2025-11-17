@@ -9,6 +9,7 @@
 #include "../Indicators/bollinger_band.mqh"
 #include "../Indicators/hilega_milega.mqh"
 #include "../Indicators/volume_insights.mqh"
+#include "../utility/utility.mqh"
 
 //+------------------------------------------------------------------+
 //| Volume HM Strategy Class                                          |
