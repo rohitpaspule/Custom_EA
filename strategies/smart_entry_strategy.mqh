@@ -19,7 +19,7 @@ public:
 
    virtual StrategySignal GetSignal() override {
       StrategySignal signal;
-      TRADE_DIRECTION direction = smart_entry_signal();
+      TRADE_DIRECTION direction = SmartEntrySignal();
 
       if(direction == BUY) {
          signal.direction = BUY;
