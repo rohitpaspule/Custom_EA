@@ -8,7 +8,6 @@
 #include "../logging/logging_helpers.mqh"
 #include "../utility/utility.mqh"
 #include "../utility/info_panel.mqh"
-#include "../utility/chart_manager.mqh"
 #include "../core/strategy_manager.mqh"
 
 //+------------------------------------------------------------------+
@@ -18,6 +17,16 @@ int InitializeEA() {
    Print("═══════════════════════════════════════════════════");
    Print("  Custom EA Framework v2.0 - Initializing...");
    Print("═══════════════════════════════════════════════════");
+
+   // IMPORTANT: Must be called BEFORE creating any indicator handles
+   // Controls indicator visibility in Strategy Tester
+   TesterHideIndicators(!ShowIndicatorsOnChart);
+
+   if(ShowIndicatorsOnChart) {
+      Print("✅ Strategy Tester: Indicators will be visible on chart");
+   } else {
+      Print("✅ Strategy Tester: Indicators will be hidden on chart");
+   }
 
    // Initialize logging
    LogHeadersInCSV();
@@ -44,14 +53,6 @@ int InitializeEA() {
    if(ShowPanel) {
       CreatePanel();
       Print("✅ Info panel created");
-   }
-
-   // Manage chart indicators visibility
-   ManageChartIndicators();
-   if(ShowIndicatorsOnChart) {
-      Print("✅ Chart indicators enabled and displayed");
-   } else {
-      Print("✅ Chart indicators hidden (as per user setting)");
    }
 
    Print("═══════════════════════════════════════════════════");
@@ -85,9 +86,6 @@ void CleanupEA() {
 
    // Deinitialize strategy
    DeinitializeStrategy();
-
-   // Cleanup chart indicators
-   CleanupChartIndicators();
 
    // Delete panel
    if(ShowPanel) {
