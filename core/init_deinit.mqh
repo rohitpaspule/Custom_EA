@@ -8,6 +8,7 @@
 #include "../logging/logging_helpers.mqh"
 #include "../utility/utility.mqh"
 #include "../utility/info_panel.mqh"
+#include "../utility/chart_manager.mqh"
 #include "../core/strategy_manager.mqh"
 
 //+------------------------------------------------------------------+
@@ -45,6 +46,14 @@ int InitializeEA() {
       Print("✅ Info panel created");
    }
 
+   // Manage chart indicators visibility
+   ManageChartIndicators();
+   if(ShowIndicatorsOnChart) {
+      Print("✅ Chart indicators enabled and displayed");
+   } else {
+      Print("✅ Chart indicators hidden (as per user setting)");
+   }
+
    Print("═══════════════════════════════════════════════════");
    Print("  EA Initialized Successfully!");
    Print("  Strategy: ", GetActiveStrategyName());
@@ -76,6 +85,9 @@ void CleanupEA() {
 
    // Deinitialize strategy
    DeinitializeStrategy();
+
+   // Cleanup chart indicators
+   CleanupChartIndicators();
 
    // Delete panel
    if(ShowPanel) {

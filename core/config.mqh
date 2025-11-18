@@ -149,6 +149,7 @@ input bool     ShowPanel                = true;     // Show Info Panel
 input int      PanelCorner              = 1;        // Panel Corner (0-3)
 input int      PanelX                   = 10;       // Panel X Position
 input int      PanelY                   = 20;       // Panel Y Position
+input bool     ShowIndicatorsOnChart    = false;    // Show Indicators on Chart
 
 //+------------------------------------------------------------------+
 //| INDICATOR INPUTS (for strategies)                                |
